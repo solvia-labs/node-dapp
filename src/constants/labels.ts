@@ -7,7 +7,7 @@ export const LABELS = {
   LIQUIDATION_INFO:
     "This view displays all loans that can be liquidated. A liquidation is a process where borrower collateral does not cover value of the loan. It is represented by health factor falling below 1.0. When a loan is liquidated, an liquidator can purchase collateral at a discount by repaing the portio of the loan. ",
   FAUCET_INFO:
-    "This faucet will help you fund your accounts outside of Solana main network.",
+    "This faucet will help you fund your accounts outside of Solvia main network.",
   ACCOUNT_FUNDED: "Account funded.",
   AIRDROP_FAIL: "Airdrop failed, please check you're not on mainnet or your localnet is running.",
   REPAY_QUESTION: "How much would you like to repay?",
@@ -16,7 +16,7 @@ export const LABELS = {
   AUDIT_WARNING:
     "Oyster is an unaudited software project used for internal purposes at the Solana Foundation. This app is not for public use.",
   FOOTER:
-    'This page was produced by the Solana Foundation ("SF") for internal educational and inspiration purposes only. SF does not encourage, induce or sanction the deployment, integration or use of Oyster or any similar application (including its code) in violation of applicable laws or regulations and hereby prohibits any such deployment, integration or use. Anyone using this code or a derivation thereof must comply with applicable laws and regulations when releasing related software.',
+    'This page was produced by the Solvia Foundation ("SF") for internal educational and inspiration purposes only. SF does not encourage, induce or sanction the deployment, integration or use of Oyster or any similar application (including its code) in violation of applicable laws or regulations and hereby prohibits any such deployment, integration or use. Anyone using this code or a derivation thereof must comply with applicable laws and regulations when releasing related software.',
   MENU_HOME: "Home",
   MENU_DASHBOARD: "Dashboard",
   DASHBOARD_INFO: "Connect to a wallet to view your deposits/loans.",
@@ -31,7 +31,7 @@ export const LABELS = {
   MENU_FAUCET: "Faucet",
   MENU_TRANSACTION: "Transactions",
   MARGIN_TRADING: "Margin Trading",
-  APP_TITLE: "Solana DAPP",
+  APP_TITLE: "Disintegration Nodes",
   CONNECT_BUTTON: "Connect",
   WALLET_TOOLTIP: "Wallet public key",
   WALLET_BALANCE: "Wallet balance",

@@ -8,39 +8,24 @@ import { AppLayout } from "./components/Layout";
 
 import { FaucetView, HomeView } from "./views";
 import {
-  getLedgerWallet,
-  getMathWallet,
-  getPhantomWallet,
-  getSolflareWallet,
   getSolletWallet,
-  getSolongWallet,
-  getTorusWallet,
 } from "@solana/wallet-adapter-wallets";
 
 export function Routes() {
   const wallets = useMemo(
     () => [
-      getPhantomWallet(),
-      getSolflareWallet(),
-      getTorusWallet({
-        options: {
-          // TODO: Get your own tor.us wallet client Id
-          clientId:
-            "BOM5Cl7PXgE9Ylq1Z1tqzhpydY0RVr8k90QQ85N7AKI5QGSrr9iDC-3rvmy0K_hF0JfpLMiXoDhta68JwcxS1LQ",
-        },
-      }),
-      getLedgerWallet(),
-      getSolongWallet(),
-      getMathWallet(),
       getSolletWallet(),
     ],
     []
   );
-
+  // hack fix solvia icon
+  var wallets_solvia = wallets;
+  wallets_solvia.forEach(item => item.icon='https://raw.githubusercontent.com/solvia-labs/solvia-icons/main/solvia_logo_color.svg');
+  console.log("walletslength",wallets_solvia.length)
   return (
     <HashRouter basename={"/"}>
       <ConnectionProvider>
-        <WalletProvider wallets={wallets} autoConnect>
+        <WalletProvider wallets={wallets_solvia} autoConnect>
           <AccountsProvider>
             <MarketProvider>
               <AppLayout>
