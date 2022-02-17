@@ -21,7 +21,6 @@ export function Routes() {
   // hack fix solvia icon
   var wallets_solvia = wallets;
   wallets_solvia.forEach(item => item.icon='https://raw.githubusercontent.com/solvia-labs/solvia-icons/main/solvia_logo_color.svg');
-  console.log("walletslength",wallets_solvia.length)
   return (
     <HashRouter basename={"/"}>
       <ConnectionProvider>
