@@ -6,7 +6,7 @@ import { WalletModalProvider } from "@solana/wallet-adapter-ant-design";
 
 import { LABELS } from "../../constants";
 import { AppBar } from "../AppBar";
-
+// import {SiderDemo} from "../SideBar/SideBar";
 const { Header, Content } = Layout;
 
 export const AppLayout = React.memo(({ children }) => {
@@ -22,6 +22,9 @@ export const AppLayout = React.memo(({ children }) => {
             </Link>
             <AppBar />
           </Header>
+          {/*<div>*/}
+          {/*<SiderDemo />*/}
+          {/*</div>*/}
           <Content style={{ padding: "0 50px" }}>{children}</Content>
         </Layout>
       </div>

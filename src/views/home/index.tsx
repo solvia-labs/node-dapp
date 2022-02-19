@@ -1,8 +1,6 @@
-import { WalletMultiButton } from "@solana/wallet-adapter-ant-design";
 import { Button, Col, Row } from "antd";
-import React, { useEffect } from "react";
+import React, {FC, useEffect} from "react";
 import { Link } from "react-router-dom";
-import { TokenIcon } from "../../components/TokenIcon";
 import { useConnectionConfig } from "../../contexts/connection";
 import { useMarkets } from "../../contexts/market";
 import { useUserBalance, useUserTotalBalance } from "../../hooks";
@@ -16,6 +14,8 @@ export const HomeView = () => {
   //const SRM = useUserBalance(SRM_ADDRESS);
   const SOL = useUserBalance(WRAPPED_SOL_MINT);
   const { balanceInUSD: totalBalanceInUSD } = useUserTotalBalance();
+
+
 
   useEffect(() => {
     const refreshTotal = () => {};
@@ -31,6 +31,15 @@ export const HomeView = () => {
     };
   }, [marketEmitter, midPriceInUSD, tokenMap]);
 
+    const BurnIcon = () => {
+        return (
+            <img
+                src='https://raw.githubusercontent.com/solvia-labs/solvia-icons/main/solvia_burn.svg'
+                style={{ width: 24, height: 24, marginRight: 2, marginLeft: -8 }}
+                alt={` icon`}
+                />
+        );
+    };
   return (
     <Row gutter={[16, 16]} align="middle">
       <Col span={24}>
@@ -40,14 +49,24 @@ export const HomeView = () => {
         </h2>
       </Col>
 
-      <Col span={12}>
-        <WalletMultiButton type="ghost" />
-      </Col>
-      <Col span={12}>
+        <Col span={8}>
+                <Button type="primary" icon={<BurnIcon />}>
+                    Create Node
+                </Button>
+        </Col>
+      <Col span={8}>
         <Link to="/faucet">
-          <Button>Faucet</Button>
+          <Button type="default">
+              View All Nodes
+          </Button>
         </Link>
       </Col>
+        <Col span={8}>
+            <Button type="default">
+                View Grants for Voting
+            </Button>
+        </Col>
+
       <Col span={24}>
         <div className="builton" />
       </Col>
