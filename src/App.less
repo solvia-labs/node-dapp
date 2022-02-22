@@ -25,7 +25,7 @@ body {
 }
 .ant-layout-header {
   align-items: center;
-  height: 42px;
+  height: 52px;
   padding: 0 20px;
   color: rgba(255, 255, 255, 0.85);
   line-height: 64px;
@@ -38,12 +38,11 @@ body {
   justify-content: space-between;
   -webkit-box-align: center;
   align-items: center;
-  flex-direction: row;
-  width: 100%;
-  top: 0px;
-  position: relative;
+  flex-direction: row-reverse;
+  width: -moz-fit-content;
+  top: 0;
   padding: 1rem;
-  z-index: 2;
+  z-index: 1;
 
   .ant-menu-horizontal {
     border-bottom-color: transparent;
@@ -86,7 +85,7 @@ body {
   display: flex;
   flex-direction: row;
   -webkit-box-align: center;
-  align-items: center;
+  align-items: flex-end;
   justify-self: flex-end;
 }
 
@@ -136,6 +135,7 @@ em {
 .ant-layout-content {
   display: flex;
   overflow: auto;
+  background-color: #28282B;
 }
 
 .flexColumn {

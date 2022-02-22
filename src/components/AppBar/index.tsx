@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Popover } from "antd";
+import {Button, Popover} from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import { Settings } from "../Settings";
 import { LABELS } from "../../constants";
@@ -12,7 +12,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 export const AppBar = (props: { left?: JSX.Element; right?: JSX.Element }) => {
   const { connected } = useWallet();
   const TopBar = (
-    <div className="App-Bar-right">
+    <div className="App-Bar-right" style={{float: 'right'}} >
       <WalletMultiButton type="primary" />
       <div style={{ margin: 5 }} />
       {connected ? <WalletDisconnectButton type="ghost" /> : null}

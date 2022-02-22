@@ -1,0 +1,16 @@
+.logo{
+    height: 52px;
+    font-family: "San Francisco Text";
+    font-size: 20px;
+    align-items: center;
+
+    -webkit-box-align: center;
+    display: flex;
+    justify-self: flex-end;
+}
+
+.createnode{
+    background-color: red;
+    color: coral;
+    collapse: red;
+}
