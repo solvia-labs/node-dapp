@@ -11,11 +11,11 @@ export async function getnodedata() {
         web3.SYSVAR_FNODEDATA_PUBKEY,
         'confirmed',
     );
-    let node_array = decodegrantdatavector(nodedata.data);
+    let node_array = decodeNODEdatavector(nodedata.data);
     return (node_array);
 }
 
-function decodegrantdatavector(byteArray) {
+function decodeNODEdatavector(byteArray) {
     var buffer = new BufferReader(byteArray);
     var node_count = buffer.readUInt64();
     let node_array = Array();

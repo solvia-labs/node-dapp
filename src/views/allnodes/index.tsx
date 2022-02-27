@@ -33,7 +33,7 @@ export const AllNodesView = () => {
 
             let nodetype = buffer.readInt8();
             if (nodetype===0) {nodetypestr = "PHOENIX";}
-            else if(nodetype === 1) {nodetypestr = "NOUA";}
+            else if(nodetype === 1) {nodetypestr = "NOVA";}
             else {nodetypestr = "FULGUR";}
 
             totalpaidstr = buffer.readUInt64();
@@ -85,17 +85,17 @@ export const AllNodesView = () => {
 
     const columns = [
         {
-            title: 'RewardAddress',
+            title: 'Reward Address',
             dataIndex: 'RewardAddress',
             key: 'RewardAddress',
         },
         {
-            title: 'NodeType',
+            title: 'Node Type',
             dataIndex: 'NodeType',
             key: 'NodeType',
         },
         {
-            title: 'TotalPaid',
+            title: 'Total Paid',
             dataIndex: 'TotalPaid',
             key: 'TotalPaid',
         },

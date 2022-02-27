@@ -8,8 +8,11 @@ export interface NodeData {
 }
 
 export interface GrantData {
-    RewardAddress: string;
-    NodeType: string;
-    TotalPaid: string;
-    state: string;
+    GrantHash: string;
+    GrantID: string;
+    ReceivingAddress: string;
+    Amount: string;
+    VoteWeight: string;
+    PayStartEpoch: string;
+    VoteCount: string;
 }

@@ -14,55 +14,63 @@ export const GrantsView = () => {
     const { publicKey } = useWallet();
 
     const [totals, setTotals] = useState<GrantData[]>([{
-        RewardAddress: "",
-        NodeType: "",
-        TotalPaid: "",
-        state: "",
+        GrantHash: '',
+        GrantID: '',
+        ReceivingAddress: '',
+        Amount: '',
+        VoteWeight: '',
+        PayStartEpoch: '',
+        VoteCount: ''
     }]);
 
     function decodegrantdatavector(byteArray: Buffer) {
         var buffer = new BufferReader(byteArray);
-        var node_count = buffer.readUInt64();
-        let node_array = [];
-        let rewardaddressstr,nodetypestr,totalpaidstr,statestr;
-        console.log("No Of Nodes: ",Number(node_count));
-        for (let i = 0; i < node_count; ++i) {
+        var grant_count = buffer.readUInt64();
+        let grants_array = [];
+        let granthashstr, grantidstr, recaddstr, amountstr, voteweight, votecount, paystartepoch;
+        console.log("No Of Grants: ",Number(grant_count));
+        for (let i = 0; i < grant_count; ++i) {
             var BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
             var bs58 = require('base-x')(BASE58);
-            rewardaddressstr = bs58.encode(buffer.readSlice(32));
 
-            let nodetype = buffer.readInt8();
-            if (nodetype===0) {nodetypestr = "PHOENIX";}
-            else if(nodetype === 1) {nodetypestr = "NOUA";}
-            else {nodetypestr = "FULGUR";}
-
-            totalpaidstr = buffer.readUInt64();
-
-            let state = buffer.readInt8();
-            if(state === 0) {statestr = "Activating";}
-            else {statestr = "Activated";}
-
+            //decoding grant_data
+            granthashstr = toHexString(buffer.readSlice(32));
+            grantidstr = buffer.readInt16();
+            recaddstr = bs58.encode(buffer.readSlice(32));
+            amountstr = buffer.readUInt64();
+            voteweight = buffer.readInt32();
+            paystartepoch = buffer.readUInt64();
+            votecount = buffer.readUInt64();
+            for (let j=0;j<votecount;++j){
+                console.log("Vote ", j, toHexString(buffer.readSlice(32)));
+            }
             let node: GrantData = {
-                RewardAddress: rewardaddressstr,
-                NodeType: nodetypestr,
-                TotalPaid: totalpaidstr,
-                state: statestr,
+                GrantHash: granthashstr,
+                GrantID: grantidstr,
+                ReceivingAddress: recaddstr,
+                Amount: amountstr,
+                VoteWeight: voteweight,
+                PayStartEpoch: paystartepoch,
+                VoteCount: votecount
             };
-            node_array.push(node);
+            console.log(node);
+            grants_array.push(node);
 
         }
-        return node_array;
+        return grants_array;
+    }
+
+    function toHexString(byteArray : Buffer) {
+        return Array.from(byteArray, function(byte) {
+            return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+        }).join('')
     }
 
     const handleRefresh = useCallback(async () => {
         try {
-            if (!publicKey) {
-                notify({
-                    message: "Please connect your wallet",
-                    type: "info",
-                });
-                return;
-            }
+            // if (!publicKey) {
+            //     return;
+            // }
             // await connection.requestAirdrop(publicKey, 2 * LAMPORTS_PER_SOL);
             // notify({
             //     message: LABELS.ACCOUNT_FUNDED,
@@ -73,44 +81,50 @@ export const GrantsView = () => {
                 'confirmed',
             );
             if (!sysvaraccount) {
-                throw Error("Error getting sysvar account");
+                throw Error("Error");
             }
-            let nodes = decodegrantdatavector(sysvaraccount.data)
-            setTotals(nodes);
+            let grants = decodegrantdatavector(sysvaraccount.data)
+            setTotals(grants);
 
         } catch (error) {
             notify({
-                message: error,
+                message: LABELS.AIRDROP_FAIL,
                 type: "error",
             });
             console.error(error);
         }
-    }, [publicKey, connection]);
-
-    const handlelog = () => {
-        console.log(totals);
-    };
+    }, [connection]);
 
     const columns = [
         {
-            title: 'RewardAddress',
-            dataIndex: 'RewardAddress',
-            key: 'RewardAddress',
+            title: 'Grant Hash',
+            dataIndex: 'GrantHash',
+            key: 'GrantHash',
         },
         {
-            title: 'NodeType',
-            dataIndex: 'NodeType',
-            key: 'NodeType',
+            title: 'GrantID',
+            dataIndex: 'GrantID',
+            key: 'Grant ID',
         },
         {
-            title: 'TotalPaid',
-            dataIndex: 'TotalPaid',
-            key: 'TotalPaid',
+            title: 'Receiving Address',
+            dataIndex: 'ReceivingAddress',
+            key: 'ReceivingAddress',
         },
         {
-            title: 'State',
-            dataIndex: 'state',
-            key: 'state',
+            title: 'Amount',
+            dataIndex: 'Amount',
+            key: 'Amount',
+        },
+        {
+            title: 'Vote Weight',
+            dataIndex: 'VoteWeight',
+            key: 'VoteWeight',
+        },
+        {
+            title: 'Vote Count',
+            dataIndex: 'VoteCount',
+            key: 'VoteCount',
         },
     ];
 
@@ -119,9 +133,6 @@ export const GrantsView = () => {
             <div>
                 <Button type="primary" onClick={handleRefresh}>
                     Refresh
-                </Button>
-                <Button type="primary" onClick={handlelog}>
-                    LogState
                 </Button>
             </div>
             <div className="flexColumn">
