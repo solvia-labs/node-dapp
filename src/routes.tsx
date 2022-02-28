@@ -6,11 +6,12 @@ import { AccountsProvider } from "./contexts/accounts";
 import { MarketProvider } from "./contexts/market";
 import { AppLayout } from "./components/Layout";
 
-import {CreateNodeView, FaucetView, GrantsView, HomeView} from "./views";
-import {AllNodesView} from "./views/allnodes/index"
+import {CreateNodeView, FaucetView, GrantsView, HomeView, AllNodesView, VoteonGrantView} from "./views";
+
 import {
   getSolletWallet
 } from "@solana/wallet-adapter-wallets";
+
 export function Routes() {
   const wallets = useMemo(
     () => [
@@ -34,6 +35,7 @@ export function Routes() {
                   <Route exact path="/createnode" children={<CreateNodeView />} />
                   <Route exact path="/viewnodes" children={<AllNodesView />} />
                   <Route exact path="/grants" children={<GrantsView />} />
+                  <Route exact path="/voteongrant" children={<VoteonGrantView />} />
                 </Switch>
               </AppLayout>
             </MarketProvider>

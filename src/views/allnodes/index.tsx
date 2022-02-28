@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { useConnection } from "../../contexts/connection";
 import * as web3 from '@solana/web3.js';
 import { notify } from "../../utils/notifications";
@@ -7,6 +7,9 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import {NodeData} from "../../contexts/nodestate";
 import {Button, Table} from "antd";
 import {BufferReader} from "../../utils/bufferutils";
+import {cache, getMultipleAccounts, MintParser} from "../../contexts/accounts";
+import {TokenInfo, TokenListProvider} from "@solana/spl-token-registry";
+import {PublicKey} from "@solana/web3.js";
 
 
 export const AllNodesView = () => {
@@ -20,12 +23,19 @@ export const AllNodesView = () => {
         state: "",
     }]);
 
+    useEffect(() => {
+        // fetch token files
+        (async () => {
+            await handleRefresh();
+        })();
+    }, [connection]);
+
     function decodegrantdatavector(byteArray: Buffer) {
         var buffer = new BufferReader(byteArray);
         var node_count = buffer.readUInt64();
         let node_array = [];
         let rewardaddressstr,nodetypestr,totalpaidstr,statestr;
-        console.log("No Of Nodes: ",Number(node_count));
+        //console.log("No Of Nodes: ",Number(node_count));
         for (let i = 0; i < node_count; ++i) {
             var BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
             var bs58 = require('base-x')(BASE58);
@@ -76,7 +86,7 @@ export const AllNodesView = () => {
 
         } catch (error) {
             notify({
-                message: LABELS.AIRDROP_FAIL,
+                message: "Fetch Node List Failed",
                 type: "error",
             });
             console.error(error);

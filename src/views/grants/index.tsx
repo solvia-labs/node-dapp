@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { useConnection } from "../../contexts/connection";
 import * as web3 from '@solana/web3.js';
 import { notify } from "../../utils/notifications";
@@ -23,12 +23,19 @@ export const GrantsView = () => {
         VoteCount: ''
     }]);
 
+    useEffect(() => {
+        // fetch token files
+        (async () => {
+            await handleRefresh();
+        })();
+    }, [connection]);
+
     function decodegrantdatavector(byteArray: Buffer) {
         var buffer = new BufferReader(byteArray);
         var grant_count = buffer.readUInt64();
         let grants_array = [];
         let granthashstr, grantidstr, recaddstr, amountstr, voteweight, votecount, paystartepoch;
-        console.log("No Of Grants: ",Number(grant_count));
+        //console.log("No Of Grants: ",Number(grant_count));
         for (let i = 0; i < grant_count; ++i) {
             var BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
             var bs58 = require('base-x')(BASE58);
@@ -53,7 +60,7 @@ export const GrantsView = () => {
                 PayStartEpoch: paystartepoch,
                 VoteCount: votecount
             };
-            console.log(node);
+            //console.log(node);
             grants_array.push(node);
 
         }
@@ -88,7 +95,7 @@ export const GrantsView = () => {
 
         } catch (error) {
             notify({
-                message: LABELS.AIRDROP_FAIL,
+                message: "Fetch Grants List Failed",
                 type: "error",
             });
             console.error(error);

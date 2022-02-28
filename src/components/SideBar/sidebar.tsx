@@ -51,6 +51,11 @@ export class SiderDemo extends React.Component {
                     </Menu.Item>
                     <Menu.Item key="4" icon={<DollarOutlined style={{ fontSize: '16px' }}/>}>
                         <Link to="/grants">
+                            View Grants
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="5" icon={<DollarOutlined style={{ fontSize: '16px' }}/>}>
+                        <Link to="/voteongrant">
                             Vote on Grants
                         </Link>
                     </Menu.Item>
