@@ -10,7 +10,7 @@ import {
     Form,
     Input,
     Button,
-    Select,
+    Select, Col, Row,
 } from 'antd';
 import {PublicKey} from "@solana/web3.js";
 
@@ -108,6 +108,9 @@ export const CreateNodeView = () => {
                     </Button>
                 </Form.Item>
             </Form>
+            <Col span={24}>
+                <div className="builton" />
+            </Col>
         </div>
 
     );

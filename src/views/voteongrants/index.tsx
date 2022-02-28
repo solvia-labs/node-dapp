@@ -8,7 +8,7 @@ import {
     Form,
     Input,
     Button,
-    Select,
+    Select, Col,
 } from 'antd';
 import {PublicKey} from "@solana/web3.js";
 
@@ -102,6 +102,9 @@ export const VoteonGrantView = () => {
                     </Button>
                 </Form.Item>
             </Form>
+            <Col span={24}>
+                <div className="builton" />
+            </Col>
         </div>
 
     );
