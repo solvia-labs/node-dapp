@@ -2,19 +2,13 @@ import React, {useCallback, useEffect, useState} from "react";
 import { useConnection } from "../../contexts/connection";
 import * as web3 from '@solana/web3.js';
 import { notify } from "../../utils/notifications";
-import { LABELS } from "../../constants";
-import { useWallet } from "@solana/wallet-adapter-react";
 import {NodeData} from "../../contexts/nodestate";
 import {Button, Table} from "antd";
 import {BufferReader} from "../../utils/bufferutils";
-import {cache, getMultipleAccounts, MintParser} from "../../contexts/accounts";
-import {TokenInfo, TokenListProvider} from "@solana/spl-token-registry";
-import {PublicKey} from "@solana/web3.js";
 
 
 export const AllNodesView = () => {
     const connection = useConnection();
-    const { publicKey } = useWallet();
 
     const [totals, setTotals] = useState<NodeData[]>([{
         RewardAddress: "",
@@ -23,12 +17,41 @@ export const AllNodesView = () => {
         state: "",
     }]);
 
+    const handleRefresh = useCallback(async () => {
+        try {
+            // if (!publicKey) {
+            //     return;
+            // }
+            // await connection.requestAirdrop(publicKey, 2 * LAMPORTS_PER_SOL);
+            // notify({
+            //     message: LABELS.ACCOUNT_FUNDED,
+            //     type: "success",
+            // });
+            const sysvaraccount = await connection.getAccountInfo(
+                web3.SYSVAR_FNODEDATA_PUBKEY,
+                'confirmed',
+            );
+            if (!sysvaraccount) {
+                throw Error("Error");
+            }
+            let nodes = decodegrantdatavector(sysvaraccount.data)
+            setTotals(nodes);
+
+        } catch (error) {
+            notify({
+                message: "Fetch Node List Failed",
+                type: "error",
+            });
+            console.error(error);
+        }
+    }, [connection]);
+
     useEffect(() => {
         // fetch token files
         (async () => {
             await handleRefresh();
         })();
-    }, [connection]);
+    }, [connection, handleRefresh]);
 
     function decodegrantdatavector(byteArray: Buffer) {
         var buffer = new BufferReader(byteArray);
@@ -63,35 +86,6 @@ export const AllNodesView = () => {
         }
         return node_array;
     }
-
-    const handleRefresh = useCallback(async () => {
-        try {
-            // if (!publicKey) {
-            //     return;
-            // }
-            // await connection.requestAirdrop(publicKey, 2 * LAMPORTS_PER_SOL);
-            // notify({
-            //     message: LABELS.ACCOUNT_FUNDED,
-            //     type: "success",
-            // });
-            const sysvaraccount = await connection.getAccountInfo(
-                web3.SYSVAR_FNODEDATA_PUBKEY,
-                'confirmed',
-            );
-            if (!sysvaraccount) {
-                    throw Error("Error");
-                }
-            let nodes = decodegrantdatavector(sysvaraccount.data)
-            setTotals(nodes);
-
-        } catch (error) {
-            notify({
-                message: "Fetch Node List Failed",
-                type: "error",
-            });
-            console.error(error);
-        }
-    }, [connection]);
 
     const columns = [
         {

@@ -10,7 +10,6 @@ import {
     Button,
     Select, Col,
 } from 'antd';
-import {PublicKey} from "@solana/web3.js";
 
 export const VoteonGrantView = () => {
     const connection = useConnection();
@@ -25,13 +24,10 @@ export const VoteonGrantView = () => {
                 });
                 return;
             }
-
-            //const from = publicKey.encode(); //web3.Keypair.fromSecretKey(secretKey);
-            //console.log(from.publicKey.toBase58());
             let vote_type : boolean;
-            if(values.votetype=='YES')
+            if(values.votetype==='YES')
                 vote_type=true;
-            else if(values.votetype=='NO')
+            else if(values.votetype==='NO')
                 vote_type=false;
             else return;
             let grant_hash : Buffer = Buffer.from(values.granthash,'hex');
@@ -61,7 +57,7 @@ export const VoteonGrantView = () => {
             });
             console.error(error);
         }
-    }, [publicKey, connection]);
+    }, [publicKey, connection, wallet, signTransaction]);
 
     return (
         <div className="flexColumn" style={{ flex: 1 }}>

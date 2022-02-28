@@ -2,8 +2,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import { useConnection } from "../../contexts/connection";
 import * as web3 from '@solana/web3.js';
 import { notify } from "../../utils/notifications";
-import { LABELS } from "../../constants";
-import { useWallet } from "@solana/wallet-adapter-react";
 import {GrantData} from "../../contexts/nodestate";
 import {Button, Table} from "antd";
 import {BufferReader} from "../../utils/bufferutils";
@@ -11,7 +9,6 @@ import {BufferReader} from "../../utils/bufferutils";
 
 export const GrantsView = () => {
     const connection = useConnection();
-    const { publicKey } = useWallet();
 
     const [totals, setTotals] = useState<GrantData[]>([{
         GrantHash: '',
@@ -22,13 +19,6 @@ export const GrantsView = () => {
         PayStartEpoch: '',
         VoteCount: ''
     }]);
-
-    useEffect(() => {
-        // fetch token files
-        (async () => {
-            await handleRefresh();
-        })();
-    }, [connection]);
 
     function decodegrantdatavector(byteArray: Buffer) {
         var buffer = new BufferReader(byteArray);
@@ -67,12 +57,6 @@ export const GrantsView = () => {
         return grants_array;
     }
 
-    function toHexString(byteArray : Buffer) {
-        return Array.from(byteArray, function(byte) {
-            return ('0' + (byte & 0xFF).toString(16)).slice(-2);
-        }).join('')
-    }
-
     const handleRefresh = useCallback(async () => {
         try {
             // if (!publicKey) {
@@ -101,6 +85,20 @@ export const GrantsView = () => {
             console.error(error);
         }
     }, [connection]);
+
+    useEffect(() => {
+        // fetch token files
+        (async () => {
+            await handleRefresh();
+        })();
+    }, [connection, handleRefresh]);
+
+
+    function toHexString(byteArray : Buffer) {
+        return Array.from(byteArray, function(byte) {
+            return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+        }).join('')
+    }
 
     const columns = [
         {

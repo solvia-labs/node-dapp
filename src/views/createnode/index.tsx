@@ -1,16 +1,14 @@
 import React, { useCallback } from "react";
-import {sendTransaction, useConnection} from "../../contexts/connection";
+import { useConnection} from "../../contexts/connection";
 import * as web3 from "@solana/web3.js";
 import { notify } from "../../utils/notifications";
-import { ConnectButton } from "./../../components/ConnectButton";
-import { LABELS } from "../../constants";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 import {
     Form,
     Input,
     Button,
-    Select, Col, Row,
+    Select, Col,
 } from 'antd';
 import {PublicKey} from "@solana/web3.js";
 
@@ -31,11 +29,11 @@ export const CreateNodeView = () => {
             //const from = publicKey.encode(); //web3.Keypair.fromSecretKey(secretKey);
             //console.log(from.publicKey.toBase58());
             let node_type;
-            if(values.nodetype=='PHOENIX')
+            if(values.nodetype==='PHOENIX')
                 node_type=0;
-            else if(values.nodetype=='NOVA')
+            else if(values.nodetype==='NOVA')
                 node_type=1;
-            else if(values.nodetype=='FULGUR')
+            else if(values.nodetype==='FULGUR')
                 node_type=2;
             else return;
             let recadd : PublicKey = new PublicKey(values.rewardaddress);
@@ -63,7 +61,7 @@ export const CreateNodeView = () => {
             });
             console.error(error);
         }
-    }, [publicKey, connection]);
+    }, [publicKey, connection, wallet, signTransaction]);
 
     return (
 
