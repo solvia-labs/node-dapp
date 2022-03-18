@@ -15,6 +15,7 @@ export const AllNodesView = () => {
         NodeType: "",
         TotalPaid: "",
         state: "",
+        NodeHash:"",
     }]);
 
     const handleRefresh = useCallback(async () => {
@@ -57,7 +58,7 @@ export const AllNodesView = () => {
         var buffer = new BufferReader(byteArray);
         var node_count = buffer.readUInt64();
         let node_array = [];
-        let rewardaddressstr,nodetypestr,totalpaidstr,statestr;
+        let rewardaddressstr,nodetypestr,totalpaidstr,statestr,nodehashstr;
         //console.log("No Of Nodes: ",Number(node_count));
         for (let i = 0; i < node_count; ++i) {
             var BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
@@ -74,17 +75,24 @@ export const AllNodesView = () => {
             let state = buffer.readInt8();
             if(state === 0) {statestr = "Activating";}
             else {statestr = "Activated";}
-
+            nodehashstr = toHexString(buffer.readSlice(32));
             let node: NodeData = {
                 RewardAddress: rewardaddressstr,
                 NodeType: nodetypestr,
                 TotalPaid: totalpaidstr,
                 state: statestr,
+                NodeHash: nodehashstr,
             };
             node_array.push(node);
 
         }
         return node_array;
+    }
+
+    function toHexString(byteArray : Buffer) {
+        return Array.from(byteArray, function(byte) {
+            return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+        }).join('')
     }
 
     const columns = [
@@ -107,6 +115,11 @@ export const AllNodesView = () => {
             title: 'State',
             dataIndex: 'state',
             key: 'state',
+        },
+        {
+            title: 'Node Hash',
+            dataIndex: 'NodeHash',
+            key: 'NodeHash',
         },
     ];
 

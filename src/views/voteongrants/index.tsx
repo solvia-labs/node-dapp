@@ -31,11 +31,13 @@ export const VoteonGrantView = () => {
                 vote_type=false;
             else return;
             let grant_hash : Buffer = Buffer.from(values.granthash,'hex');
-            console.log(grant_hash);
+            let node_hash : Buffer = Buffer.from(values.nodehash,'hex');
+            //console.log(grant_hash);
             const params = {
                 fromPubkey: publicKey,
                 GrantHash: grant_hash,
                 Vote: vote_type,
+                NodeHash: node_hash,
             };
             let transaction = new web3.Transaction().add(web3.SystemProgram.voteongrant(params));
 
@@ -83,6 +85,9 @@ export const VoteonGrantView = () => {
                 }}
             >
                 <Form.Item name="granthash" label="Grant Hash" rules={[{required:true, message:'Please Enter Grant Hash'}, {whitespace:false}]} hasFeedback>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="nodehash" label="Node Hash" rules={[{required:true, message:'Please Enter Node Hash to vote from'}, {whitespace:false}]} hasFeedback>
                     <Input />
                 </Form.Item>
                 <Form.Item name="votetype" label="Vote" rules={[{required:true, message:'Select your Vote(yes/no)'}]} hasFeedback>

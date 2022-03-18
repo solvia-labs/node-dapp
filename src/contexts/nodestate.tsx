@@ -5,6 +5,7 @@ export interface NodeData {
     NodeType: string;
     TotalPaid: string;
     state: string;
+    NodeHash: string;
 }
 
 export interface GrantData {
