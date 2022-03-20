@@ -1,7 +1,6 @@
 import { useLocalStorageState } from "./../utils/utils";
 import {
   Keypair,
-  clusterApiUrl,
   Connection,
   PublicKey,
   Transaction,
@@ -24,17 +23,17 @@ export type ENV =
 export const ENDPOINTS = [
   {
     name: "mainnet-beta" as ENV,
-    endpoint: "https://solana-api.projectserum.com/",
+    endpoint: "https://api.mainnet-beta.solvia.io/",
     chainID: ChainID.MainnetBeta,
   },
   {
     name: "testnet" as ENV,
-    endpoint: clusterApiUrl("testnet"),
+    endpoint: "https://api.testnet.solvia.io/",
     chainID: ChainID.Testnet,
   },
   {
     name: "devnet" as ENV,
-    endpoint: clusterApiUrl("devnet"),
+    endpoint: "https://api.devnet.solvia.io/",
     chainID: ChainID.Devnet,
   },
   {

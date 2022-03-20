@@ -72,6 +72,7 @@ export const GrantsView = () => {
                 'confirmed',
             );
             if (!sysvaraccount) {
+                console.log(web3.GRANT_DATA_PUBKEY.toBase58());
                 throw Error("Error");
             }
             let grants = decodegrantdatavector(sysvaraccount.data)
