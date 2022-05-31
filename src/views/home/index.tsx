@@ -34,9 +34,13 @@ export const HomeView = () => {
 
   const handleRefresh = useCallback(async () => {
     try {
-      // if (!publicKey) {
-      //     return;
-      // }
+      if (!publicKey) {
+        notify({
+          message: "Please Connect your Wallet",
+          type: "error",
+        });
+        return;
+      }
       // await connection.requestAirdrop(publicKey, 2 * LAMPORTS_PER_SOL);
       // notify({
       //     message: LABELS.ACCOUNT_FUNDED,
@@ -49,7 +53,7 @@ export const HomeView = () => {
       if (!sysvaraccount) {
         throw Error("Error");
       }
-      let nodes = decodegrantdatavector(sysvaraccount.data)
+      let nodes = decodegrantdatavector(sysvaraccount.data);
       setTotals(nodes);
 
     } catch (error) {
@@ -69,6 +73,18 @@ export const HomeView = () => {
   }, [publicKey, connection, handleRefresh]);
 
   function decodegrantdatavector(byteArray: Buffer) {
+    if (!publicKey) {
+      let node_array = [];
+      let node: NodeData = {
+        RewardAddress: '',
+        NodeType: '',
+        TotalPaid: '',
+        state: '',
+        NodeHash: '',
+      };
+      node_array.push(node);
+      return node_array;
+    }
     var buffer = new BufferReader(byteArray);
     var node_count = buffer.readUInt64();
     let node_array = [];
@@ -98,7 +114,7 @@ export const HomeView = () => {
         NodeHash: nodehashstr,
       };
       //console.log(publicKey);
-      if(rewardaddressstr == publicKey)
+      if(rewardaddressstr === publicKey.toString())
         node_array.push(node);
 
     }
