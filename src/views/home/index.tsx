@@ -174,7 +174,7 @@ export const HomeView = () => {
       <Col span={24}>
         <h2>Your balances ({formatUSD.format(totalBalanceInUSD)}):</h2>
         <h2>
-          SOLVIA: {SOL.balance/LAMPORTS_PER_SOL} ({formatUSD.format(SOL.balanceInUSD)})
+          SOLVIA: {SOL.balance} ({formatUSD.format(SOL.balanceInUSD)})
         </h2>
       </Col>
       <Col span={24}>
