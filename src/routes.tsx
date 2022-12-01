@@ -12,15 +12,18 @@ import {
   getSolletWallet
 } from "@solana/wallet-adapter-wallets";
 
+import { SolletWalletAdapterConfig } from '@solana/wallet-adapter-sollet';
+
 export function Routes() {
+  const config : SolletWalletAdapterConfig =  {provider : "https://wallet.solvia.io"};
   const wallets = useMemo(
     () => [
-      getSolletWallet(),
+      getSolletWallet(config),
     ],
-    []
+    [config]
   );
   // hack fix solvia icon
-  var wallets_solvia = wallets;
+  let wallets_solvia = wallets;
   wallets_solvia.forEach(item => item.icon='https://raw.githubusercontent.com/solvia-labs/solvia-icons/main/solvia_logo_color.svg');
   wallets_solvia.forEach(item => item.url='https://wallet.solvia.io');
   return (
